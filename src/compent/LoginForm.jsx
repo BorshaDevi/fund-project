@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import axios from "axios"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 
 
 const formSchema = z.object({
@@ -24,6 +24,8 @@ const formSchema = z.object({
   })
 const LoginForm=()=>{
   const router=useRouter()
+  const searchParams=useSearchParams()
+  const from=searchParams.get('from') || '/'
     const form=useForm({
             resolver: zodResolver(formSchema),
             defaultValues:{
@@ -37,7 +39,7 @@ const LoginForm=()=>{
             .then(res =>{
               console.log(res.data)
               if(res.status===200){
-                  router.push('/')
+                  router.push(from)
               }
             }).catch(err =>{
               console.log(err, 'Error in login')

@@ -5,7 +5,7 @@ export default async function verifyToken(token){
     }
 try{
       const secret=new TextEncoder().encode(process.env.JWT_SECRET)
-      const{payload ,protectedHeader}=await jwtVerify(token,secret)
+      const{payload}=await jwtVerify(token,secret)
       return {
         userId:payload.userId,
         email:payload.email,

@@ -36,15 +36,15 @@ export async function POST(request){
           })
               .setProtectedHeader({ alg })
               .setIssuedAt()
-              .setExpirationTime('1m')
+              .setExpirationTime('2h')
               .sign(secret)
                console.log(jwt)
                if(jwt){
                     (await cookies()).set('token',jwt,{
                          httpOnly:true,
                          path:'/',
-                         maxAge:'1min',
-                         secure:false,
+                         maxAge:7200,
+                         secure:process.env.NODE_ENV === 'production',
                          sameSite:'strict',
                     })
                }
