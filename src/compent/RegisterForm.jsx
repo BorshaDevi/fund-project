@@ -16,6 +16,7 @@ import axios from "axios"
 import { useRouter } from "next/navigation"
 
 
+
 const formSchema = z.object({
     name: z.string().min(2 ,{
         message:"Name must be at least 2 characters long"
@@ -40,15 +41,15 @@ const RegisterForm=()=>{
     async function onSubmit (data){
         console.log(data)
         await axios.post('/api/user',data).then((res)=>{
-            console.log(res.data, 'user created successfully')
-            if(res.data.status===200){
-                  router.push('/login')
-            }
+          console.log(res.data, 'user created successfully')
+          if(res.data.status===200){
+                router.push('/login')
+          }
 
-            
-        }).catch((err)=>{
-            console.log(err, 'Error in creating user')
-        })
+          
+      }).catch((err)=>{
+          console.log(err, 'Error in creating user')
+      })
     }
     return(
         <div >

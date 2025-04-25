@@ -2,6 +2,8 @@ import connectDB from "@/DB/db"
 import User from "@/Modals/User"
 import { NextResponse } from "next/server"
 import bcrypt from "bcryptjs";
+import { SignJWT } from "jose";
+import { cookies } from "next/headers";
 export async function POST(request){
         try{
            await connectDB()
@@ -24,6 +26,28 @@ export async function POST(request){
                         }
                    )
               }
+              //token creation
+              const secret=new TextEncoder().encode(process.env.JWT_SECRET)
+              const alg='HS256'
+              const jwt=await new SignJWT({
+               email:user.email,
+               userId:user._id.toString(),
+               name:user.name,
+          })
+              .setProtectedHeader({ alg })
+              .setIssuedAt()
+              .setExpirationTime('1m')
+              .sign(secret)
+               console.log(jwt)
+               if(jwt){
+                    (await cookies()).set('token',jwt,{
+                         httpOnly:true,
+                         path:'/',
+                         maxAge:'1min',
+                         secure:false,
+                         sameSite:'strict',
+                    })
+               }
               return NextResponse.json(
                 { message: "Login successful" },
                 { status: 200 }
