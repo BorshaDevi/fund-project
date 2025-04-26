@@ -12,15 +12,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-      <SidebarProvider>
-        <AppSidebar></AppSidebar>
+      
         <WarpLayout>
-          <main>
-        <SidebarTrigger></SidebarTrigger>
         {children}
-          </main>
         </WarpLayout>
-        </SidebarProvider>
+        
         </body>
     </html>
   )

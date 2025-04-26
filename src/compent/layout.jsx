@@ -8,8 +8,10 @@ const WarpLayout=async({children})=>{
     const user=token?await verifyToken(token):null;
     return(
         <div>
+          <div className="flex">
           {user && <Header></Header>}
           {user&& <Dashboard></Dashboard>}
+          </div>
           {children}
         </div>
     )
