@@ -15,7 +15,7 @@ import Link from "next/link"
 import axios from "axios"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
-
+import { AiOutlineLoading } from "react-icons/ai";
 
 const formSchema = z.object({
     email:z.string().email(),
@@ -24,7 +24,7 @@ const formSchema = z.object({
     }).max(20),
   })
 const LoginForm=()=>{
-  const [loading , setLoading]=useState(true)
+  const [loading , setLoading]=useState(false)
   const router=useRouter()
   const searchParams=useSearchParams()
   const from=searchParams.get('from') || '/'
@@ -37,13 +37,14 @@ const LoginForm=()=>{
             }
         })
        async function onSubmit(data){
+        setLoading(true)
             console.log(data)
             await axios.post('/api/loginUser',data)
             .then(res =>{
               console.log(res.data)
               if(res.status===200){
-                  router.push(from)
-                  setLoading(false)
+                router.push(from)
+                setLoading(false)
               }
             }).catch(err =>{
               console.log(err, 'Error in login')
@@ -79,7 +80,7 @@ const LoginForm=()=>{
             </FormItem>
           )}
           />
-          <Button type="submit" className='bg-slate-600 text-white'>{loading?  : <span>Login</span>}</Button>
+          <Button type="submit" className='bg-slate-600 text-white'>{loading? <span className="animate-spin h-5 w-5 mr-3"><AiOutlineLoading /> </span> : <span>Login</span>}</Button>
         </form>
         <p> Do not have any account ?Please <Link href='/register' className="hover:text-blue-600 hover:underline">Register</Link></p>
       </Form>

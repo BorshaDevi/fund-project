@@ -14,6 +14,8 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import axios from "axios"
 import { useRouter } from "next/navigation"
+import { AiOutlineLoading } from "react-icons/ai"
+import { useState } from "react"
 
 
 
@@ -29,6 +31,7 @@ const formSchema = z.object({
     }).max(20),
   })
 const RegisterForm=()=>{
+  const [loading , setLoading]=useState(false)
   const router=useRouter()
     const form=useForm({
         resolver: zodResolver(formSchema),
@@ -39,11 +42,13 @@ const RegisterForm=()=>{
         }
     })
     async function onSubmit (data){
+        setLoading(true)
         console.log(data)
         await axios.post('/api/user',data).then((res)=>{
           console.log(res.data, 'user created successfully')
           if(res.data.status===200){
                 router.push('/login')
+                setLoading(false)
           }
 
           
@@ -94,7 +99,7 @@ const RegisterForm=()=>{
                   </FormItem>
                 )}
                 />
-                <Button type="submit" className='bg-slate-600 text-white'>Register</Button>
+                <Button type="submit" className='bg-slate-600 text-white'>{loading? <span className="animate-spin h-5 w-5 mr-3"><AiOutlineLoading /> </span> : <span>Register</span>}</Button>
               </form>
               <p> Already have account ?Please <Link href='/login' className="hover:text-blue-600 hover:underline">Login</Link></p>
             </Form>
