@@ -8,7 +8,6 @@ const WarpLayout=async({children})=>{
     const user=token?await verifyToken(token):null;
     return(
         <div>
-          {user && <Header></Header>}
           {user&& <Dashboard></Dashboard>}
           {children}
         </div>
