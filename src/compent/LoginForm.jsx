@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import axios from "axios"
 import { useRouter, useSearchParams } from "next/navigation"
+import { useState } from "react"
 
 
 const formSchema = z.object({
@@ -23,9 +24,11 @@ const formSchema = z.object({
     }).max(20),
   })
 const LoginForm=()=>{
+  const [loading , setLoading]=useState(true)
   const router=useRouter()
   const searchParams=useSearchParams()
   const from=searchParams.get('from') || '/'
+  
     const form=useForm({
             resolver: zodResolver(formSchema),
             defaultValues:{
@@ -40,6 +43,7 @@ const LoginForm=()=>{
               console.log(res.data)
               if(res.status===200){
                   router.push(from)
+                  setLoading(false)
               }
             }).catch(err =>{
               console.log(err, 'Error in login')
@@ -75,7 +79,7 @@ const LoginForm=()=>{
             </FormItem>
           )}
           />
-          <Button type="submit" className='bg-slate-600 text-white'>Login</Button>
+          <Button type="submit" className='bg-slate-600 text-white'>{loading?  : <span>Login</span>}</Button>
         </form>
         <p> Do not have any account ?Please <Link href='/register' className="hover:text-blue-600 hover:underline">Register</Link></p>
       </Form>
