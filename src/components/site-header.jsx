@@ -14,10 +14,12 @@ import {
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { useSidebar } from "@/components/ui/sidebar"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 
-export function SiteHeader() {
+export function SiteHeader({user}) {
+  
   const { toggleSidebar } = useSidebar()
-
+  
   return (
     (<header
       className="flex sticky top-0 z-50 w-full items-center border-b bg-white dark:bg-slate-950">
@@ -26,20 +28,18 @@ export function SiteHeader() {
           <SidebarIcon />
         </Button>
         <Separator orientation="vertical" className="mr-2 h-4" />
-        <Breadcrumb className="hidden sm:block">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="#">
-                Building Your Application
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-        <SearchForm className="w-full sm:ml-auto sm:w-auto" />
+        
+       <div className='lg:ml-auto ml-auto flex'>
+       <div>
+        <h1 className="uppercase font-bold">{user.name}</h1>
+        <p>{user.email}</p>
+       </div>
+       <Avatar >
+        <AvatarImage></AvatarImage>
+        <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+       </div>
+        
       </div>
     </header>)
   );

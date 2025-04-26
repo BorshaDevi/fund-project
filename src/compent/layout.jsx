@@ -6,12 +6,10 @@ import Dashboard from "./Dashboard";
 const WarpLayout=async({children})=>{
     const token=(await cookies()).get('token')?.value;
     const user=token?await verifyToken(token):null;
+    
     return(
         <div>
-          
-          
-          {user&& <Dashboard></Dashboard>}
-          
+          {user&& <Dashboard user={user}></Dashboard>}
           {children}
         </div>
     )
