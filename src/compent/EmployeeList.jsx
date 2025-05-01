@@ -6,12 +6,18 @@ import { useEffect, useState } from "react";
 
 const EmployeeList=()=>{
     const [data, setData]=useState(null)
-     useEffect(async()=>{
-        await axios.get('/api/employeelist')
-     .then(res => {
-        console.log(res.data)
-        setData(res.data)
-     }).catch(err => console.log(err))
+     useEffect(()=>{
+        const fetchData = async () => {
+            try {
+              const res = await axios.get('/api/employeelist');
+              console.log(res.data);
+              setData(res.data.data); 
+            } catch (err) {
+              console.error('Error fetching employee list:', err);
+            }
+          };
+      
+          fetchData();
      },[])
     return(
         <div>
