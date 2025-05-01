@@ -1,3 +1,4 @@
+
 import AppSidebar from "@/components/app-sidebar";
 
 const { SidebarProvider, SidebarTrigger } = require("@/components/ui/sidebar")

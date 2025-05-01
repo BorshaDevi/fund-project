@@ -1,9 +1,11 @@
-const { default: EmployeeList } = require("@/compent/EmployeeList")
+import EmployeeList from "@/compent/EmployeeList";
+
 
 const page=()=>{
     return(
-        <div className="mx-auto max-w-2xl py-10 px-10 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-full py-10 min-h-screen px-10 sm:px-6 lg:px-8">
             <div className="bg-white shadow-xl rounded-lg p-6 text-center">
+                <div>Header</div>
             <EmployeeList></EmployeeList>
         </div>
         </div>
