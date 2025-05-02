@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import DatePicker from "./Calander"
 import axios from "axios"
+import { useParams } from "next/navigation"
 
 const formSchema = z.object({
     firstName: z.string().min(2 ,{
@@ -50,6 +51,9 @@ const formSchema = z.object({
     
   })
 const UpdateEmployeeData=()=>{
+   const id=useParams()
+   console.log(id , 'update data')
+
     const form=useForm({
                 resolver: zodResolver(formSchema),
                 defaultValues:{
