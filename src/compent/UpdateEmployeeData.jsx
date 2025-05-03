@@ -15,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import DatePicker from "./Calander"
 import axios from "axios"
 import { useParams } from "next/navigation"
+import { useEffect, useState } from "react"
 
 const formSchema = z.object({
     firstName: z.string().min(2 ,{
@@ -51,8 +52,24 @@ const formSchema = z.object({
     
   })
 const UpdateEmployeeData=()=>{
-   const id=useParams()
+   const {id}=useParams()
    console.log(id , 'update data')
+   const [data, setData]=useState([])
+   console.log(data , 'from update Employee ')
+    
+     useEffect(()=>{
+        const fetchData = async () => {
+            try {
+              const res = await axios.get(`/api/employeelist/${id}`);
+              console.log(res.data , 'component');
+              setData(res.data.data); 
+            } catch (err) {
+              console.error('Error fetching employee list:', err);
+            }
+          };
+      
+          fetchData();
+     },[])
 
     const form=useForm({
                 resolver: zodResolver(formSchema),

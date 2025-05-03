@@ -1,7 +1,8 @@
-
+'use client'
 import AppSidebar from "@/components/app-sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
-const { SidebarProvider, SidebarTrigger } = require("@/components/ui/sidebar")
+
 
 const Dashboard=()=>{
   return(
