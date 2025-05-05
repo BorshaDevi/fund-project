@@ -52,7 +52,7 @@ const formSchema = z.object({
     
   })
 const UpdateEmployeeData=()=>{
-   const {id}=useParams()
+   const{ id}=useParams()
    console.log(id , 'update data')
    const [data, setData]=useState([])
    console.log(data , 'from update Employee ')
@@ -60,8 +60,8 @@ const UpdateEmployeeData=()=>{
      useEffect(()=>{
         const fetchData = async () => {
             try {
-              const res = await axios.get(`/api/employeelist/${id}`);
-              console.log(res.data , 'component');
+              const res = await axios.get(`/api/employeeId/${id}`);
+              console.log(res.data , 'update component');
               setData(res.data.data); 
             } catch (err) {
               console.error('Error fetching employee list:', err);
@@ -98,10 +98,10 @@ const UpdateEmployeeData=()=>{
                     basicSalary:parseInt(data.basicSalary),
                 }
                 console.log(userData)
-                await axios.post('/api/employee',userData)
-                .then(res => {
-                    console.log(res.data)
-                }).catch(err => console.log(err))
+                // await axios.post('/api/employee',userData)
+                // .then(res => {
+                //     console.log(res.data)
+                // }).catch(err => console.log(err))
             }
     return(
         <div>
