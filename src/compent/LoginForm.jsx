@@ -26,8 +26,8 @@ const formSchema = z.object({
 const LoginForm=()=>{
   const [loading , setLoading]=useState(false)
   const router=useRouter()
-  const searchParams=useSearchParams()
-  const from=searchParams.get('from') || '/'
+  // const searchParams=useSearchParams()
+  // const from=searchParams.get('from') || '/'
   
     const form=useForm({
             resolver: zodResolver(formSchema),
@@ -43,7 +43,7 @@ const LoginForm=()=>{
             .then(res =>{
               console.log(res.data)
               if(res.status===200){
-                router.push(from)
+                router.push('/employeelist')
                 setLoading(false)
               }
             }).catch(err =>{
