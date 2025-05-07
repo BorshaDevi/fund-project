@@ -1,6 +1,13 @@
+import EmployeeList from "@/Modals/EmployeeList"
+import { NextResponse } from "next/server"
+import { ObjectId } from "mongodb";
 export async function PUT(request ,{params}) {
     try{
-
+          const req=await request.json()
+          const {id}= params.id
+          const Id=new ObjectId(id)
+          console.log(req , 'server update')
+        //   const update=await EmployeeList.updateMany({_id : Id}, req)
     }catch(error){
         console.log(error, 'Error in Id ways Employee data Update ')
                          return NextResponse.json(

@@ -53,38 +53,37 @@ const formSchema = z.object({
   })
 const UpdateEmployeeData=()=>{
    const{ id}=useParams()
-   console.log(id , 'update data')
-   const [data, setData]=useState([])
-   console.log(data , 'from update Employee ')
-    
-     useEffect(()=>{
-        const fetchData = async () => {
-            try {
-              const res = await axios.get(`/api/employeeId/${id}`);
-              console.log(res.data , 'update component');
-              setData(res.data.data); 
-            } catch (err) {
-              console.error('Error fetching employee list:', err);
-            }
-          };
-      
-          fetchData();
-     },[])
-
+   const [da , setDa]=useState(null)
+   console.log(da , 'from update Employee ')
+  
     const form=useForm({
                 resolver: zodResolver(formSchema),
-                defaultValues:{
-                    firstName:"",
-                    lastName:"",
-                    employeeEmail:"",
-                    employeeId:"",
-                    gender:"",
-                    dateOfBirth:'',
-                    dateOfConfirmation:'',
-                    designation:"",
-                    basicSalary:'',
+                defaultValues: {
+                  firstName: da?.firstName || '',
+                  lastName: da?.lastName || '',
+                  employeeEmail: da?.employeeEmail || '',
+                  employeeId: da?.employeeId || '',
+                  gender: da?.gender || '',
+                  dateOfBirth: da?.dateOfBirth || '',
+                  dateOfConfirmation: da?.dateOfConfirmation || '',
+                  designation: da?.designation || '',
+                  basicSalary: da?.basicSalary || '',
                 }
             })
+            // get data id
+            useEffect(()=>{
+              const fetchData = async () => {
+                  try {
+                    const res = await axios.get(`/api/employeeId/${id}`);
+                    setDa(res.data.data); 
+                  } catch (err) {
+                    console.error('Error fetching employee list:', err);
+                  }
+                };
+            
+                fetchData();
+           },[id])
+            
             async function onSubmit (data){
                 const userData={
                     firstName:data.firstName,
@@ -98,11 +97,12 @@ const UpdateEmployeeData=()=>{
                     basicSalary:parseInt(data.basicSalary),
                 }
                 console.log(userData)
-                // await axios.post('/api/employee',userData)
-                // .then(res => {
-                //     console.log(res.data)
-                // }).catch(err => console.log(err))
+                await axios.post(`/api/updateemployeedata/${id}`,userData)
+                .then(res => {
+                    console.log(res.data)
+                }).catch(err => console.log(err))
             }
+            
     return(
         <div>
             <Form {...form}>
@@ -129,7 +129,7 @@ const UpdateEmployeeData=()=>{
                   <FormItem >
                     <FormLabel>Last Name</FormLabel>
                     <FormControl>
-                      <input type='text' {...field} placeholder="Last Name" className='border-2 border-black p-1 rounded-md' />
+                      <input type='text' {...field}  placeholder="Last Name" className='border-2 border-black p-1 rounded-md' />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

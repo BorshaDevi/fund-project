@@ -1,12 +1,12 @@
 import connectDB from "@/DB/db"
 import EmployeeList from "@/Modals/EmployeeList"
 import { NextResponse } from "next/server"
-
+import { ObjectId } from "mongodb";
 export async function GET(request , {params}){
     try{
          await connectDB()
-         const id=params.id
-         const idEmployee=await EmployeeList.findOne({id})
+         const Id=params.id
+         const idEmployee=await EmployeeList.findOne({_id:Id})
          console.log(idEmployee)
            if(idEmployee){
               return NextResponse.json({
