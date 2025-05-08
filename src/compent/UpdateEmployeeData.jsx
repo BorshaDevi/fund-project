@@ -76,8 +76,8 @@ const UpdateEmployeeData=()=>{
                   try {
                     const res = await axios.get(`/api/employeeId/${id}`);
                     setDa(res.data.data); 
-                  } catch (err) {
-                    console.error('Error fetching employee list:', err);
+                  } catch (error) {
+                    console.error('Error fetching employee list:', error);
                   }
                 };
             
