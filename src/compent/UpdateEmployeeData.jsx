@@ -59,15 +59,15 @@ const UpdateEmployeeData=()=>{
     const form=useForm({
                 resolver: zodResolver(formSchema),
                 defaultValues: {
-                  firstName: da?.firstName || '',
-                  lastName: da?.lastName || '',
-                  employeeEmail: da?.employeeEmail || '',
-                  employeeId: da?.employeeId || '',
-                  gender: da?.gender || '',
-                  dateOfBirth: da?.dateOfBirth || '',
-                  dateOfConfirmation: da?.dateOfConfirmation || '',
-                  designation: da?.designation || '',
-                  basicSalary: da?.basicSalary || '',
+                  firstName:  '',
+                  lastName: '',
+                  employeeEmail:  '',
+                  employeeId:  '',
+                  gender:  '',
+                  dateOfBirth: '',
+                  dateOfConfirmation:  '',
+                  designation:  '',
+                  basicSalary:  '',
                 }
             })
             // get data id
