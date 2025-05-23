@@ -80,7 +80,6 @@ const UpdateEmployeeData=()=>{
                     console.error('Error fetching employee list:', error);
                   }
                 };
-            
                 fetchData();
            },[id])
             
