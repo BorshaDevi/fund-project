@@ -10,9 +10,11 @@ const WarpLayout=async({children})=>{
     
     
     return(
-        <div>
+        <div className="flex flex-col min-h-screen">
           {user && <Dashboard></Dashboard>}
-          {children}
+          <main>
+            {children}
+          </main>
         </div>
     )
 }
