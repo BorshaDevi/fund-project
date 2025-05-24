@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/select";
 import DatePicker from "./Calander";
 import axios from "axios";
-import { useParams } from "next/navigation";
+import {  useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const formSchema = z.object({
@@ -75,7 +75,7 @@ const formSchema = z.object({
 });
 const UpdateEmployeeData = () => {
   const { id } = useParams();
-
+  const router=useRouter()
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -132,7 +132,10 @@ const UpdateEmployeeData = () => {
     await axios
       .put(`/api/updateemployeedata/${id}`, userData)
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data)
+        if(res.data.status === 200){
+          router.push('/employeelist')
+        };
       })
       .catch((err) => console.log(err));
   }
