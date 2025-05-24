@@ -21,7 +21,7 @@ import {
 import DatePicker from "./Calander";
 import axios from "axios";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   firstName: z
@@ -54,9 +54,13 @@ const formSchema = z.object({
     }),
   gender: z.string(),
 
-  dateOfBirth: z.date(),
+  dateOfBirth: z
+    .union([z.string(), z.number(), z.date()])
+    .transform((val) => new Date(val)),
 
-  dateOfConfirmation: z.date(),
+  dateOfConfirmation: z
+    .union([z.string(), z.number(), z.date()])
+    .transform((val) => new Date(val)),
 
   designation: z
     .string()
@@ -71,8 +75,6 @@ const formSchema = z.object({
 });
 const UpdateEmployeeData = () => {
   const { id } = useParams();
-  const [da, setDa] = useState(null);
-  console.log(da, "from update Employee ");
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -112,7 +114,7 @@ const UpdateEmployeeData = () => {
       }
     };
     fetchData();
-  }, [id , form]);
+  }, [id, form]);
 
   async function onSubmit(data) {
     const userData = {
@@ -128,7 +130,7 @@ const UpdateEmployeeData = () => {
     };
     console.log(userData);
     await axios
-      .post(`/api/updateemployeedata/${id}`, userData)
+      .put(`/api/updateemployeedata/${id}`, userData)
       .then((res) => {
         console.log(res.data);
       })
