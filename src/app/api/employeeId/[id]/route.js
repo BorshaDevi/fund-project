@@ -5,7 +5,7 @@ import { ObjectId } from "mongodb";
 export async function GET(request , {params}){
     try{
          await connectDB()
-         const Id=params.id
+         const Id=await params.id
          const idEmployee=await EmployeeList.findOne({_id:Id})
          console.log(idEmployee)
            if(idEmployee){

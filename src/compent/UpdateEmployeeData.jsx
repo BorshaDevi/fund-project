@@ -88,6 +88,7 @@ const UpdateEmployeeData = () => {
       basicSalary: "",
     },
   });
+
   // get data id
   useEffect(() => {
     const fetchData = async () => {
@@ -101,8 +102,8 @@ const UpdateEmployeeData = () => {
           employeeEmail: employee.employeeEmail,
           employeeId: employee.employeeId,
           gender: employee.gender,
-          dateOfBirth: new Date(employee.dateOfBirth),
-          dateOfConfirmation: new Date(employee.dateOfConfirmation),
+          dateOfBirth: employee.dateOfBirth,
+          dateOfConfirmation: employee.dateOfConfirmation,
           designation: employee.designation,
           basicSalary: employee.basicSalary.toString(),
         });
@@ -111,7 +112,7 @@ const UpdateEmployeeData = () => {
       }
     };
     fetchData();
-  }, [id]);
+  }, [id , form]);
 
   async function onSubmit(data) {
     const userData = {
