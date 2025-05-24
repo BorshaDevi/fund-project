@@ -95,7 +95,7 @@ const UpdateEmployeeData = () => {
       try {
         const res = await axios.get(`/api/employeeId/${id}`);
         const employee = res.data.data;
-        setDa(employee);
+        // setDa(employee);
         form.reset({
           firstName: employee.firstName,
           lastName: employee.lastName,
