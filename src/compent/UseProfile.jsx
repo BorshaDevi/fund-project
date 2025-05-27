@@ -1,5 +1,6 @@
 'use client';
 const UseProfile=()=>{
+    
     return(
         <div>
              <h1 className="text-2xl font-bold text-center mt-10">User Profile</h1>
