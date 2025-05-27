@@ -5,12 +5,13 @@ import { cookies } from "next/headers";
 const page=async()=>{
     const token=(await cookies()).get('token')?.value;
         const user=token?await verifyToken(token):null;
+        console.log(user , 'user token ');
         if(!user){
             return;
         }
     return(
         <div>
-           <UseProfile></UseProfile>
+           <UseProfile user={user}></UseProfile>
         </div>
     )
 }
