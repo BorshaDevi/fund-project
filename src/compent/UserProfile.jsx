@@ -8,7 +8,7 @@ const UserProfile = ({ user }) => {
   const {userId , email , name}=user
   // userProfile get
   useEffect(async()=>{
-    const getUserData=await axios.get(`/api/useprofile/${userId}`)
+    const getUserData=await axios.get(`/api/userprofile/${userId}`)
   .then(res => {
     console.log(res)
   }).catch(e => {
