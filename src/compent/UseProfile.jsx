@@ -1,8 +1,18 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import axios from "axios";
 
-const UseProfile = ({ user }) => {
+const UseProfile = async({ user }) => {
   console.log(user, "user profile");
+  const {userId , email , name}=user
+  // userProfile get
+  await axios.get(`/api/useprofile/${userId}`)
+  .then(res => {
+    console.log(res)
+  }).catch(e => {
+    console.log(e)
+  })
+
   return (
     <div >
       <h1 className="text-2xl font-bold text-center mt-10">User Profile</h1>
