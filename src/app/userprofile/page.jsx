@@ -1,4 +1,5 @@
-import UseProfile from "@/compent/UseProfile";
+
+import UserProfile from "@/compent/UserProfile";
 import verifyToken from "@/lib/auth";
 import { cookies } from "next/headers";
 
@@ -11,7 +12,7 @@ const page=async()=>{
         }
     return(
         <div>
-           <UseProfile user={user}></UseProfile>
+           <UserProfile user={user}></UserProfile>
         </div>
     )
 }

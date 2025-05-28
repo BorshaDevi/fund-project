@@ -1,17 +1,22 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import axios from "axios";
+import { useEffect } from "react";
 
-const UseProfile = async({ user }) => {
+const UserProfile = ({ user }) => {
   console.log(user, "user profile");
   const {userId , email , name}=user
   // userProfile get
-  await axios.get(`/api/useprofile/${userId}`)
+  useEffect(async()=>{
+    const getUserData=await axios.get(`/api/useprofile/${userId}`)
   .then(res => {
     console.log(res)
   }).catch(e => {
     console.log(e)
   })
+  getUserData()
+  }, [])
+  
 
   return (
     <div >
@@ -27,5 +32,5 @@ const UseProfile = async({ user }) => {
     </div>
   );
 };
-export default UseProfile;
+export default UserProfile;
 // Compare this snippet from src/app/userprofile/page.jsx:
