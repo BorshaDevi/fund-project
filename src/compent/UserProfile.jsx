@@ -4,18 +4,17 @@ import axios from "axios";
 import { useEffect } from "react";
 
 const UserProfile = ({ user }) => {
-  console.log(user, "user profile");
+  // console.log(user, "user profile");
   const {userId , email , name}=user
   // userProfile get
   useEffect(async()=>{
     const getUserData=await axios.get(`/api/userprofile/${userId}`)
   .then(res => {
-    console.log(res)
+    console.log(res.data , 'frontend userprofile data')
   }).catch(e => {
     console.log(e)
   })
-  getUserData()
-  }, [])
+  }, [userId])
   
 
   return (
