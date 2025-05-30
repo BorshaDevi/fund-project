@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 const UserProfile = ({ user }) => {
   const [data , setData]=useState({})
   console.log(data , 'data ')
-  // console.log(user, "user profile");
   const { userId } = user;
+  
   // userProfile get user data id aways
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +39,7 @@ const UserProfile = ({ user }) => {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <h2 className="text-xl font-semibold mb-4">Profile Details</h2>
-        <p className="text-gray-700 uppercase">Name: {user.name}</p>
+        <p className="text-gray-700 uppercase">Name: {data?.name}</p>
       </div>
     </div>
   );
