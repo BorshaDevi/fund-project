@@ -1,13 +1,14 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import axios from "axios";
+import { CldUploadWidget } from "next-cloudinary";
 import { useEffect, useState } from "react";
 
 const UserProfile = ({ user }) => {
-  const [data , setData]=useState({})
-  console.log(data , 'data ')
+  const [data, setData] = useState({});
+  console.log(data, "data ");
   const { userId } = user;
-  
+
   // userProfile get user data id aways
   useEffect(() => {
     const fetchData = async () => {
@@ -15,9 +16,9 @@ const UserProfile = ({ user }) => {
         await axios
           .get(`/api/userprofile/${userId}`)
           .then((res) => {
-            if(res){
+            if (res) {
               console.log(res.data, "frontend userprofile data");
-              setData(res.data.user)
+              setData(res.data.user);
             }
           })
           .catch((e) => {
@@ -38,6 +39,16 @@ const UserProfile = ({ user }) => {
           <AvatarImage src="" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
+        <CldUploadWidget 
+        signatureEndpoint=''>
+        {({open}) =>{
+          return(
+            <button onClick={() => open()}>
+              Upload your Image
+            </button>
+          )
+        }}
+         </CldUploadWidget>
         <h2 className="text-xl font-semibold mb-4">Profile Details</h2>
         <p className="text-gray-700 uppercase">Name: {data?.name}</p>
       </div>
@@ -45,4 +56,3 @@ const UserProfile = ({ user }) => {
   );
 };
 export default UserProfile;
-
