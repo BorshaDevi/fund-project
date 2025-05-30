@@ -1,27 +1,40 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const UserProfile = ({ user }) => {
+  const [data , setData]=useState({})
+  console.log(data , 'data ')
   // console.log(user, "user profile");
-  const {userId , email , name}=user
-  // userProfile get
-  useEffect(async()=>{
-    const getUserData=await axios.get(`/api/userprofile/${userId}`)
-  .then(res => {
-    console.log(res.data , 'frontend userprofile data')
-  }).catch(e => {
-    console.log(e)
-  })
-  }, [userId])
-  
+  const { userId } = user;
+  // userProfile get user data id aways
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await axios
+          .get(`/api/userprofile/${userId}`)
+          .then((res) => {
+            if(res){
+              console.log(res.data, "frontend userprofile data");
+              setData(res.data.user)
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } catch {
+        console.log(e, "From user Profile get data ");
+      }
+    };
+    fetchData();
+  }, [userId]);
 
   return (
-    <div >
+    <div>
       <h1 className="text-2xl font-bold text-center mt-10">User Profile</h1>
       <div className="max-w-md mx-auto mt-5 p-5 bg-white rounded-lg shadow-md text-center">
-        <Avatar className='mx-auto'>
+        <Avatar className="mx-auto">
           <AvatarImage src="" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
@@ -32,4 +45,4 @@ const UserProfile = ({ user }) => {
   );
 };
 export default UserProfile;
-// Compare this snippet from src/app/userprofile/page.jsx:
+
