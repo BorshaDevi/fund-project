@@ -39,18 +39,29 @@ const UserProfile = ({ user }) => {
           <AvatarImage src="" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-        <CldUploadWidget 
-        signatureEndpoint=''>
-        {({open}) =>{
-          return(
-            <button onClick={() => open()}>
-              Upload your Image
-            </button>
-          )
-        }}
-         </CldUploadWidget>
-        <h2 className="text-xl font-semibold mb-4">Profile Details</h2>
-        <p className="text-gray-700 uppercase">Name: {data?.name}</p>
+
+        {/* Image upload Update */}
+        <CldUploadWidget signatureEndpoint="/api/uploadImage">
+          {({ open }) => {
+            return (
+              <button
+                onClick={() => open()}
+                className="bg-green-600 rounded-md p-2 "
+              >
+                Upload your Image
+              </button>
+            );
+          }}
+        </CldUploadWidget>
+
+        {/* Name Update */}
+        <form className="mt-5 mb-5">
+          <input
+            type="text"
+            className="border-b border-green-300 w-full outline-none focus:outline-none py-4 bg-transparent my-4 text-black uppercase font-semibold "
+            defaultValue={data?.name}
+          />
+        </form>
       </div>
     </div>
   );

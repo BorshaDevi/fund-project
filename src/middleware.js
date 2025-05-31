@@ -7,7 +7,7 @@ import { NextResponse } from "next/server"
 export  async function middleware(request) {
     console.log(" Middleware is running:", request.nextUrl.pathname);
     try{
-        const routers=['/','/employee','/employeelist', '/updateemployeedata/[id]', '/useprofile']
+        const routers=['/','/employee','/employeelist', '/updateemployeedata', '/userprofile']
       const matchRoute=routers.some(route => request.nextUrl.pathname=== route || request.nextUrl.pathname.startsWith(route + '/'))
       
       if(matchRoute){
