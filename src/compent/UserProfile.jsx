@@ -35,9 +35,9 @@ const UserProfile = ({ user }) => {
     <div>
       <h1 className="text-2xl font-bold text-center mt-10">User Profile</h1>
       <div className="max-w-md mx-auto mt-5 p-5 bg-white rounded-lg shadow-md text-center">
-        <Avatar className="mx-auto">
+        <Avatar className="mx-auto bg-whtie border-green-700 border-spacing-4">
           <AvatarImage src="" />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarFallback >Your Image</AvatarFallback>
         </Avatar>
 
         {/* Image upload Update */}
