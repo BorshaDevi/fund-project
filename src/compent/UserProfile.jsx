@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 
 const UserProfile = ({ user }) => {
   const [data, setData] = useState({});
+  const [resource , setResource]=useState()
+  console.log(resource)
   console.log(data, "data ");
   const { userId } = user;
 
@@ -41,11 +43,22 @@ const UserProfile = ({ user }) => {
         </Avatar>
 
         {/* Image upload Update */}
-        <CldUploadWidget signatureEndpoint="/api/uploadImage">
+        <CldUploadWidget signatureEndpoint="/api/uploadImage"
+         onSuccess={(result , {widget})=>{
+          setResource(result?.info)
+         }}
+         onQueuesEnd={(result , {widget}) => {
+          widget.close();
+         }}
+        >
           {({ open }) => {
+            function handleOnClick(){
+              setResource(undefined)
+              open()
+            }
             return (
               <button
-                onClick={() => open()}
+                onClick={handleOnClick}
                 className="bg-green-600 rounded-md p-2 "
               >
                 Upload your Image
