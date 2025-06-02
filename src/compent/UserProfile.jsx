@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 
 const UserProfile = ({ user }) => {
   const [data, setData] = useState({});
+  const [name , setName]=useState(null)
   const [resource , setResource]=useState()
   console.log(resource)
   console.log(data, "data ");
+  console.log(name , 'name state data')
   const { userId } = user;
 
   // userProfile get user data id aways
@@ -32,6 +34,15 @@ const UserProfile = ({ user }) => {
     };
     fetchData();
   }, [userId]);
+
+
+  // handleName button
+  const handleName=(e)=>{
+    e.preventDefault()
+    const name=e.target.name.value
+    setName(name)
+       console.log (name ,'hadle Name')
+  }
 
   return (
     <div>
@@ -68,12 +79,16 @@ const UserProfile = ({ user }) => {
         </CldUploadWidget>
 
         {/* Name Update */}
-        <form className="mt-5 mb-5">
+        <form  className="mt-5 mb-5">
           <input
+          onClick={handleName}
             type="text"
+            name='name'
             className="border-b border-green-300 w-full outline-none focus:outline-none py-4 bg-transparent my-4 text-black uppercase font-semibold "
             defaultValue={data?.name}
           />
+          <br></br>
+          <button className="p-1 font-bold text-white bg-green-500 rounded-md shadow-sm w-14"><input type="submit"  value='Save'/></button>
         </form>
       </div>
     </div>
