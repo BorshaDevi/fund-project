@@ -79,9 +79,9 @@ const UserProfile = ({ user }) => {
         </CldUploadWidget>
 
         {/* Name Update */}
-        <form  className="mt-5 mb-5">
+        <form onSubmit={handleName} className="mt-5 mb-5">
           <input
-          onClick={handleName}
+          
             type="text"
             name='name'
             className="border-b border-green-300 w-full outline-none focus:outline-none py-4 bg-transparent my-4 text-black uppercase font-semibold "
