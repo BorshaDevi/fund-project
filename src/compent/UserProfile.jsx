@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const UserProfile = ({ user }) => {
   const [data, setData] = useState({});
-  const [name , setName]=useState(null)
+  const [ image, setImage]=useState(null)
   const [resource , setResource]=useState()
   console.log(resource)
   console.log(data, "data ");
@@ -40,7 +40,6 @@ const UserProfile = ({ user }) => {
   const handleName=(e)=>{
     e.preventDefault()
     const name=e.target.name.value
-    setName(name)
        console.log (name ,'hadle Name')
   }
 
