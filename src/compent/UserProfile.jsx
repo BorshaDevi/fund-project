@@ -1,29 +1,47 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { CldUploadWidget } from "next-cloudinary";
 import { useEffect, useState } from "react";
-
 const UserProfile = ({ user }) => {
   const [data, setData] = useState({});
   const [img, setImg] = useState(null);
+  const [name, setName] = useState("");
   const [resource, setResource] = useState();
   console.log(resource);
+  console.log(img, "img");
   console.log(data, "data ");
-  console.log(img, "image state data");
   const { userId } = user;
 
-  // handleName button
+  // handleName button 
   const handleName = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
-    let payload = {};
+    setName(name);
+  };
+
+  // update user data
+  useEffect(() => {
+    const updateData = async () => {
+     let payload = {
+      userId:data?.userId,
+    };
     if (img) {
       payload.image=img
     }
     if(name){payload.name=name}
-    axios.patch("/api/updateUser",payload);
-  };
+
+    const {refetch}=useQuery({
+      queryKey: ["updateUser"],
+      queryFn: async () => {
+        const res = await axios.patch("/api/updateUser", payload);
+        console.log(res.data, "update user data");
+        return [res.data, refetch];
+      },
+    })
+      updateData();
+    }})
 
   // userProfile get user data id aways
   useEffect(() => {
@@ -61,6 +79,7 @@ const UserProfile = ({ user }) => {
           signatureEndpoint="/api/uploadImage"
           onSuccess={(result, { widget }) => {
             setResource(result?.info);
+            setImg(result?.info?.secure_url);
           }}
           onQueuesEnd={(result, { widget }) => {
             widget.close();
