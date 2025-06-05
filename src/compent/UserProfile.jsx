@@ -12,6 +12,13 @@ const UserProfile = ({ user }) => {
   console.log(data, "data ");
   console.log(name , 'name state data')
   const { userId } = user;
+  // handleName button
+  const handleName=(e)=>{
+    e.preventDefault()
+    const name=e.target.name.value
+    axios.patch('/api/name')
+       console.log (name ,'hadle Name')
+  }
 
   // userProfile get user data id aways
   useEffect(() => {
@@ -36,12 +43,6 @@ const UserProfile = ({ user }) => {
   }, [userId]);
 
 
-  // handleName button
-  const handleName=(e)=>{
-    e.preventDefault()
-    const name=e.target.name.value
-       console.log (name ,'hadle Name')
-  }
 
   return (
     <div>
