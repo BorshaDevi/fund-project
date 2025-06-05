@@ -3,7 +3,7 @@ import User from "@/Modals/User";
 import { NextResponse } from "next/server";
 
 export async function PATCH(req){
-     const userData=await req.body;
+     const userData=await req.json();
      const {userId, name , image}=userData;
      console.log(userData, "user data from patch");
      try{
