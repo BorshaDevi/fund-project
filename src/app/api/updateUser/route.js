@@ -2,7 +2,7 @@ import connectDB from "@/DB/db";
 import User from "@/Modals/User";
 import { NextResponse } from "next/server";
 
-export async function PATACH(req){
+export async function PATCH(req){
      const userData=await req.body;
      const {userId, name , image}=userData;
      console.log(userData, "user data from patch");
@@ -17,7 +17,10 @@ export async function PATACH(req){
             }, { status: 400 });
          }
            await connectDB();
-           const result=await User.findOneAndUpdate({_id:userId}, updateData)
+           const result=await User.findOneAndUpdate({_id:userId}, updateData , {
+            new:true,
+            runvalidators:true,
+           })
            if(result){
                 return NextResponse.json({
                      message: "User data updated successfully",
