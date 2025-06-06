@@ -22,9 +22,7 @@ const UserProfile = ({ user }) => {
   };
 
   // update user data
-  useEffect(() => {
-    const updateData = async () => {
-     let payload = {
+  let payload = {
       userId:data?.userId,
     };
     if (img) {
@@ -32,7 +30,8 @@ const UserProfile = ({ user }) => {
     }
     if(name){payload.name=name}
 
-    const {refetch}=useQuery({
+    if(img || name){
+       const {refetch}=useQuery({
       queryKey: ["updateUser"],
       queryFn: async () => {
         const res = await axios.patch("/api/updateUser", payload);
@@ -40,9 +39,9 @@ const UserProfile = ({ user }) => {
         return [res.data, refetch];
       },
     })
-      updateData();
-    }})
+    }
 
+    
   // userProfile get user data id aways
   useEffect(() => {
     const fetchData = async () => {
@@ -53,6 +52,7 @@ const UserProfile = ({ user }) => {
             if (res) {
               console.log(res.data, "frontend userprofile data");
               setData(res.data.user);
+              refetch();
             }
           })
           .catch((e) => {
@@ -108,6 +108,7 @@ const UserProfile = ({ user }) => {
             name="name"
             className="border-b border-green-300 w-full outline-none focus:outline-none py-4 bg-transparent my-4 text-black uppercase font-semibold "
             defaultValue={data?.name}
+            placeholder="Your name"
           />
           <br></br>
           <button className="p-1 font-bold text-white bg-green-500 rounded-md shadow-sm w-14">
