@@ -52,7 +52,7 @@ const UserProfile = ({ user }) => {
             if (res) {
               console.log(res.data, "frontend userprofile data");
               setData(res.data.user);
-              refetch();
+              
             }
           })
           .catch((e) => {
