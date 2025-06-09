@@ -1,6 +1,6 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { CldUploadWidget } from "next-cloudinary";
 import { useEffect, useState } from "react";
@@ -31,12 +31,12 @@ const UserProfile = ({ user }) => {
     if(name){payload.name=name}
 
     if(img || name){
-       const {refetch}=useQuery({
+       const {refetch}=useMutation({
       queryKey: ["updateUser"],
       queryFn: async () => {
         const res = await axios.patch("/api/updateUser", payload);
         console.log(res.data, "update user data");
-        return [res.data, refetch];
+        return res.data;
       },
     })
     }
