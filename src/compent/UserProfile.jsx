@@ -1,69 +1,48 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { CldUploadWidget } from "next-cloudinary";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 const UserProfile = ({ user }) => {
-  const [data, setData] = useState({});
-  const [img, setImg] = useState(null);
-  const [name, setName] = useState("");
+  const queryClient = useQueryClient();
   const [resource, setResource] = useState();
   console.log(resource);
-  console.log(img, "img");
-  console.log(data, "data ");
   const { userId } = user;
 
-  // handleName button 
+  // handleName button
   const handleName = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
-    setName(name);
+    const payload = {
+      userId: userId,
+      name: name,
+    };
+    userProfileUpdate.mutate(payload);
   };
 
-  // update user data
-  let payload = {
-      userId:data?.userId,
-    };
-    if (img) {
-      payload.image=img
-    }
-    if(name){payload.name=name}
-
-    if(img || name){
-       const {refetch}=useMutation({
-      queryKey: ["updateUser"],
-      queryFn: async () => {
-        const res = await axios.patch("/api/updateUser", payload);
-        console.log(res.data, "update user data");
-        return res.data;
-      },
-    })
-    }
-
-    
   // userProfile get user data id aways
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await axios
-          .get(`/api/userprofile/${userId}`)
-          .then((res) => {
-            if (res) {
-              console.log(res.data, "frontend userprofile data");
-              setData(res.data.user);
-              
-            }
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } catch {
-        console.log(e, "From user Profile get data ");
-      }
-    };
-    fetchData();
-  }, [userId]);
+  const { data } = useQuery({
+    queryKey: ["userProfile", userId],
+    queryFn: async () => {
+      const res = await axios.get(`/api/userprofile/${userId}`);
+      console.log(res.data.user, "user data");
+      return res.data.user;
+    },
+    enabled: !!userId,
+  });
+
+  // update user data
+  const userProfileUpdate = useMutation({
+    mutationFn: async (payload) => {
+      const res = await axios.patch("/api/updateUser", payload);
+      console.log(res.data, "update user data");
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["userProfile", userId]);
+    },
+  });
 
   return (
     <div>
@@ -79,7 +58,11 @@ const UserProfile = ({ user }) => {
           signatureEndpoint="/api/uploadImage"
           onSuccess={(result, { widget }) => {
             setResource(result?.info);
-            setImg(result?.info?.secure_url);
+            const payload = {
+              userId: userId,
+              image: result?.info?.secure_url,
+            };
+            userProfileUpdate.mutate(payload);
           }}
           onQueuesEnd={(result, { widget }) => {
             widget.close();
@@ -111,9 +94,11 @@ const UserProfile = ({ user }) => {
             placeholder="Your name"
           />
           <br></br>
-          <button className="p-1 font-bold text-white bg-green-500 rounded-md shadow-sm w-14">
-            <input type="submit" value="Save" />
-          </button>
+          <input
+            type="submit"
+            className="p-1 font-bold text-white bg-green-500 rounded-md shadow-sm w-14"
+            value="Save"
+          />
         </form>
       </div>
     </div>

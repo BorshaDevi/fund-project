@@ -41,7 +41,6 @@ const LoginForm=()=>{
             console.log(data)
             await axios.post('/api/loginUser',data)
             .then(res =>{
-              console.log(res.data)
               if(res.status===200){
                 router.push('/employeelist')
                 setLoading(false)

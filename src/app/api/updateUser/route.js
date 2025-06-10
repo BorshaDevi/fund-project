@@ -19,12 +19,18 @@ export async function PATCH(req){
            await connectDB();
            const result=await User.findOneAndUpdate({_id:userId}, updateData , {
             new:true,
-            runvalidators:true,
+            runValidators: true
            })
            if(result){
                 return NextResponse.json({
                      message: "User data updated successfully",
                 }, { status: 200 });
+           }
+           else{
+                    return NextResponse.json({
+                         message: "User not found",
+                         status: 404
+                    }, { status: 404 });
            }
            
      }catch(e){
