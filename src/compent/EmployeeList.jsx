@@ -12,6 +12,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdEditNote } from "react-icons/md";
+import { RiDeleteBin2Line } from "react-icons/ri";
 
 const EmployeeList = () => {
   const [data, setData] = useState([]);
@@ -33,13 +34,12 @@ const EmployeeList = () => {
   return (
     <div>
       <Table>
-        <TableCaption> Employee List </TableCaption>
         <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>list</TableHead>
-            <TableHead></TableHead>
+          <TableRow >
+            <TableHead >Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Position</TableHead>
+            <TableHead>Edit</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -55,6 +55,12 @@ const EmployeeList = () => {
                   <MdEditNote className="text-2xl text-green-700" />
                 </Link>
               </TableCell>
+              <TableCell>
+                <Link href={`/employeedatadelete/${da._id}`}>
+                  <RiDeleteBin2Line className="text-2xl text-red-700" />
+                </Link>
+              </TableCell>
+
             </TableRow>
           ))}
         </TableBody>

@@ -17,7 +17,7 @@ const page=async()=>{
                 <div className="flex justify-end">
                     <Link href={'/employee'}><button className="bg-green-800 p-2 text-white rounded-md font-semibold hover:bg-green-400" >Add Employee</button></Link>
                 </div>
-                <div>Employee List</div>
+                <div className='font-semibold font-mono text-xl text-emerald-600'>Employee List</div>
             <EmployeeList></EmployeeList>
         </div>
         </div>
