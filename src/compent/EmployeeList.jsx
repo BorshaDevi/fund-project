@@ -2,41 +2,56 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { MdEditNote } from "react-icons/md";
 import { RiDeleteBin2Line } from "react-icons/ri";
 
 const EmployeeList = () => {
-  const [data, setData] = useState([]);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get("/api/employeelist");
-        console.log(res.data, "component");
-        setData(res.data.data);
-      } catch (err) {
-        console.error("Error fetching employee list:", err);
-      }
-    };
+  //get employee data
+  const { data } = useQuery({
+    queryKey: ["employeeList"],
+    queryFn: async () => {
+      const res = await axios.get("/api/employeelist");
+      console.log(res.data, "query data");
+      return res.data.data;
+    },
+    onError: (error) => {
+      console.error("Error fetching employee list:", error);
+    },
+  });
 
-    fetchData();
-  }, []);
+  // handle delete employee
+  
+    const {mutate:handledeleteEmployee} = useMutation({
+      mutationFn: async (id) => {
+        const res = await axios.delete(`/api/employeedatadelete/${id}`);
+        console.log(res.data, "delete employee data");
+        return res.data;
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(["employeeList"]);
+      },
+      onError: (error) => {
+        console.error("Error deleting employee:", error);
+      },
+    });
+  
 
   return (
     <div>
       <Table>
         <TableHeader>
-          <TableRow >
-            <TableHead >Name</TableHead>
+          <TableRow>
+            <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Position</TableHead>
             <TableHead>Edit</TableHead>
@@ -56,11 +71,13 @@ const EmployeeList = () => {
                 </Link>
               </TableCell>
               <TableCell>
-                <Link href={`/employeedatadelete/${da._id}`}>
-                  <RiDeleteBin2Line className="text-2xl text-red-700" />
-                </Link>
+                <RiDeleteBin2Line
+                  onClick={() => {
+                    handledeleteEmployee(da?._id);
+                  }}
+                  className="text-2xl text-red-700"
+                />
               </TableCell>
-
             </TableRow>
           ))}
         </TableBody>
