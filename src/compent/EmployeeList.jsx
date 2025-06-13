@@ -30,21 +30,20 @@ const EmployeeList = () => {
   });
 
   // handle delete employee
-  
-    const {mutate:handledeleteEmployee} = useMutation({
-      mutationFn: async (id) => {
-        const res = await axios.delete(`/api/employeedatadelete/${id}`);
-        console.log(res.data, "delete employee data");
-        return res.data;
-      },
-      onSuccess: () => {
-        queryClient.invalidateQueries(["employeeList"]);
-      },
-      onError: (error) => {
-        console.error("Error deleting employee:", error);
-      },
-    });
-  
+
+  const { mutate: handledeleteEmployee } = useMutation({
+    mutationFn: async (id) => {
+      const res = await axios.delete(`/api/employeedatadelete/${id}`);
+      console.log(res.data, "delete employee data");
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["employeeList"]);
+    },
+    onError: (error) => {
+      console.error("Error deleting employee:", error);
+    },
+  });
 
   return (
     <div>
@@ -61,10 +60,19 @@ const EmployeeList = () => {
           {data?.map((da) => (
             <TableRow key={da._id}>
               <TableCell>
-                {da.firstName} {da.lastName}
+                <Link href={`/providentfund/${da._id}`}>
+                  {da.firstName} {da.lastName}
+                </Link>
               </TableCell>
-              <TableCell>{da.employeeEmail}</TableCell>
-              <TableCell>{da.designation}</TableCell>
+              <TableCell>
+                <Link href={`/providentfund/${da._id}`}>
+                  {da.employeeEmail}
+                </Link>
+              </TableCell>
+              <TableCell>
+                <Link href={`/providentfund/${da._id}`}>{da.designation}</Link>
+              </TableCell>
+
               <TableCell>
                 <Link href={`/updateemployeedata/${da._id}`}>
                   <MdEditNote className="text-2xl text-green-700" />
