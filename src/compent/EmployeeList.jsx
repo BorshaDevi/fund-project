@@ -10,11 +10,13 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { MdEditNote } from "react-icons/md";
 import { RiDeleteBin2Line } from "react-icons/ri";
 
 const EmployeeList = () => {
   const queryClient = useQueryClient();
+  const pathname = usePathname();
 
   //get employee data
   const { data } = useQuery({
@@ -60,12 +62,12 @@ const EmployeeList = () => {
           {data?.map((da) => (
             <TableRow key={da._id}>
               <TableCell>
-                <Link href={`/providentfund/${da._id}`}>
+                <Link href={`/providentfund/${da._id}`} className={`link ${pathname===`/providentfund/${da._id}`? 'cursor-pointer':''}`}>
                   {da.firstName} {da.lastName}
                 </Link>
               </TableCell>
               <TableCell>
-                <Link href={`/providentfund/${da._id}`}>
+                <Link href={`/providentfund/${da._id}`} className={`link ${pathname===`/providentfund/${da._id}`? 'cursor-pointer':''}`}>
                   {da.employeeEmail}
                 </Link>
               </TableCell>
@@ -74,7 +76,7 @@ const EmployeeList = () => {
               </TableCell>
 
               <TableCell>
-                <Link href={`/updateemployeedata/${da._id}`}>
+                <Link href={`/updateemployeedata/${da._id}`} className={`link ${pathname===`/providentfund/${da._id}`? 'cursor-pointer':''}`}>
                   <MdEditNote className="text-2xl text-green-700" />
                 </Link>
               </TableCell>
