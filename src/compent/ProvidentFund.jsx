@@ -19,10 +19,8 @@ import { useState } from "react";
 
 
 const formSchema = z.object({
-    email:z.string().email(),
-    password: z.string().min(8,{
-        message:"Password must be at least 8 characters long"
-    }).max(20),
+    month:z.string(),
+    year: z.string(),
   })
 const ProvidentFund= () => {
   const [loading , setLoading]=useState(false)
@@ -32,8 +30,8 @@ const ProvidentFund= () => {
   const form=useForm({
               resolver: zodResolver(formSchema),
               defaultValues:{
-                  email:"",
-                  
+                  month:"",
+                  year:"",
               }
           })
   return (
