@@ -19,9 +19,14 @@ const  ProvidentFund = () => {
   });
   console.log(data, "Provident Fund  User data");
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-2xl font-bold mb-4">Provident Fund</h1>
-      <p className="text-lg">This is the Provident Fund page.</p>
+    <div className="mx-auto max-w-3xl py-10 min-h-screen  sm:px-6 lg:px-10" >
+      <div className="flex flex-col items-center  h-screen bg-green-700">
+        <h1 className="text-2xl font-bold mb-4">Provident Fund</h1>
+      <p className="text-lg">Name:{data?.firstName} {data?.lastName}</p>
+      <p className="text-lg">Designation:{data?.designation} </p>
+      <p className="text-lg">EID:{data?.employeeId} </p>
+      </div>
+
     </div>
   );
 }
