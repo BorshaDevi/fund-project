@@ -37,6 +37,7 @@ const  ProvidentFund = () => {
       <p className="text-lg">Designation:{data?.designation} </p>
       <p className="text-lg">EID:{data?.employeeId} </p>
       </div>
+      {/* list */}
       </div>
 
     </div>
